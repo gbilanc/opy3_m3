@@ -26,6 +26,7 @@ class GVPlotter(QGraphicsView):
         self.setScene(QGraphicsScene(0, -float(settings.max_size[1]),
                                      float(settings.max_size[0]),
                                      float(settings.max_size[1]), self))
+        self.rotate(180)
         self.__plot_points = list()
         self.__start_point = None
         self.point = None
@@ -51,9 +52,20 @@ class GVPlotter(QGraphicsView):
         painter.setFont(QFont("Roman", 8, QFont.Weight.Bold))
         for x in range(0, scene_rect.width(), 100):
             painter.drawLine(x, -scene_rect.height(), x, 0)
-            painter.drawText(x - 10, 10, 20, 10, Qt.AlignCenter, "%d" % (x / 100))
         for y in range(0, scene_rect.height(), 100):
             painter.drawLine(0, -y, scene_rect.width(), -y)
+        for x in range(0, scene_rect.width(), 100):
+            painter.save()
+            painter.translate(x, 15)
+            painter.rotate(180)
+            painter.drawText(-10, -5, 20, 10, Qt.AlignCenter, "%d" % (x / 100))
+            painter.restore()
+        for y in range(0, scene_rect.height(), 100):
+            painter.save()
+            painter.translate(-25, -y)
+            painter.rotate(180)
+            painter.drawText(-20, -5, 40, 10, Qt.AlignLeft | Qt.AlignVCenter, "%d" % (y / 100))
+            painter.restore()
 
     def wheelEvent(self, event):
         """
