@@ -3,19 +3,30 @@
 ################################################################################
 ## Form generated from reading UI file 'mainapp.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
+    QHBoxLayout, QHeaderView, QLabel, QLineEdit,
+    QMainWindow, QMenu, QMenuBar, QProgressBar,
+    QPushButton, QRadioButton, QSizePolicy, QSpacerItem,
+    QStatusBar, QTabWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
-from .axis import Axis
-from .gvplotter import GVPlotter
-from .njstatus import NjStatus
-
+from ui.axis import Axis
+from ui.gvplotter import GVPlotter
+from ui.njstatus import NjStatus
+import ui.resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,37 +36,37 @@ class Ui_MainWindow(object):
         self.actionAcquisisci_dxf = QAction(MainWindow)
         self.actionAcquisisci_dxf.setObjectName(u"actionAcquisisci_dxf")
         icon = QIcon()
-        icon.addFile(u":/img/res/open.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/img/res/open.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionAcquisisci_dxf.setIcon(icon)
         self.actionFine_lavoro = QAction(MainWindow)
         self.actionFine_lavoro.setObjectName(u"actionFine_lavoro")
         icon1 = QIcon()
-        icon1.addFile(u":/img/res/exit.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/img/res/exit.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionFine_lavoro.setIcon(icon1)
         self.actionStartMonitor = QAction(MainWindow)
         self.actionStartMonitor.setObjectName(u"actionStartMonitor")
         icon2 = QIcon()
-        icon2.addFile(u":/img/res/up-and-down.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/img/res/up-and-down.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionStartMonitor.setIcon(icon2)
         self.actionStopMonitor = QAction(MainWindow)
         self.actionStopMonitor.setObjectName(u"actionStopMonitor")
         icon3 = QIcon()
-        icon3.addFile(u":/img/res/no.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/img/res/no.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionStopMonitor.setIcon(icon3)
         self.actionSimula_plotter = QAction(MainWindow)
         self.actionSimula_plotter.setObjectName(u"actionSimula_plotter")
         icon4 = QIcon()
-        icon4.addFile(u":/img/res/preview.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon4.addFile(u":/img/res/preview.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionSimula_plotter.setIcon(icon4)
         self.actionInformazioni = QAction(MainWindow)
         self.actionInformazioni.setObjectName(u"actionInformazioni")
         icon5 = QIcon()
-        icon5.addFile(u":/img/res/about_(info).png", QSize(), QIcon.Normal, QIcon.Off)
+        icon5.addFile(u":/img/res/about_(info).png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionInformazioni.setIcon(icon5)
         self.actionImpostazioni = QAction(MainWindow)
         self.actionImpostazioni.setObjectName(u"actionImpostazioni")
         icon6 = QIcon()
-        icon6.addFile(u":/img/res/settings.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon6.addFile(u":/img/res/settings.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionImpostazioni.setIcon(icon6)
         self.actionAaaa = QAction(MainWindow)
         self.actionAaaa.setObjectName(u"actionAaaa")
@@ -88,11 +99,10 @@ class Ui_MainWindow(object):
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabWidget.setMinimumSize(QSize(360, 0))
         font = QFont()
-        font.setFamily(u"Courier 10 Pitch")
+        font.setFamilies([u"Courier 10 Pitch"])
         font.setPointSize(10)
         font.setBold(True)
         font.setItalic(False)
-        font.setWeight(QFont.Weight.Bold)
         font.setKerning(True)
         self.tabWidget.setFont(font)
         self.tab_1 = QWidget()
@@ -112,7 +122,7 @@ class Ui_MainWindow(object):
         self.tableWidget_layers.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.tableWidget_layers.setObjectName(u"tableWidget_layers")
         font1 = QFont()
-        font1.setFamily(u"Liberation Mono")
+        font1.setFamilies([u"Liberation Mono"])
         font1.setPointSize(10)
         self.tableWidget_layers.setFont(font1)
         self.tableWidget_layers.horizontalHeader().setDefaultSectionSize(75)
@@ -139,7 +149,7 @@ class Ui_MainWindow(object):
         self.rbPenna = QRadioButton(self.tab_1)
         self.rbPenna.setObjectName(u"rbPenna")
         font2 = QFont()
-        font2.setFamily(u"Courier 10 Pitch")
+        font2.setFamilies([u"Courier 10 Pitch"])
         font2.setPointSize(14)
         self.rbPenna.setFont(font2)
         self.rbPenna.setStyleSheet(u"border: 1px solid blue; \n"
@@ -148,13 +158,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.rbPenna, 2, 0, 1, 1)
 
-        self.rbLama = QRadioButton(self.tab_1)
-        self.rbLama.setObjectName(u"rbLama")
-        self.rbLama.setFont(font2)
-        self.rbLama.setStyleSheet(u"border: 1px solid blue; \n"
+        self.rbLaser = QRadioButton(self.tab_1)
+        self.rbLaser.setObjectName(u"rbLaser")
+        self.rbLaser.setFont(font2)
+        self.rbLaser.setStyleSheet(u"border: 1px solid blue; \n"
 "border-radius: 5px; ")
 
-        self.gridLayout_2.addWidget(self.rbLama, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.rbLaser, 2, 1, 1, 1)
 
         self.rbRullo = QRadioButton(self.tab_1)
         self.rbRullo.setObjectName(u"rbRullo")
@@ -178,7 +188,7 @@ class Ui_MainWindow(object):
         self.btGeneraCsv.setObjectName(u"btGeneraCsv")
         self.btGeneraCsv.setFont(font2)
         icon7 = QIcon()
-        icon7.addFile(u":/img/res/save.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon7.addFile(u":/img/res/save.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btGeneraCsv.setIcon(icon7)
         self.btGeneraCsv.setIconSize(QSize(48, 48))
 
@@ -192,13 +202,12 @@ class Ui_MainWindow(object):
         self.push_origine = QPushButton(self.tab_2)
         self.push_origine.setObjectName(u"push_origine")
         font4 = QFont()
-        font4.setFamily(u"Courier 10 Pitch")
+        font4.setFamilies([u"Courier 10 Pitch"])
         font4.setPointSize(14)
         font4.setBold(True)
-        font4.setWeight(QFont.Weight.Bold)
         self.push_origine.setFont(font4)
         icon8 = QIcon()
-        icon8.addFile(u":/img/res/search.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon8.addFile(u":/img/res/search.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.push_origine.setIcon(icon8)
         self.push_origine.setIconSize(QSize(48, 48))
 
@@ -209,10 +218,9 @@ class Ui_MainWindow(object):
         self.lineEdit_Y = QLineEdit(self.tab_2)
         self.lineEdit_Y.setObjectName(u"lineEdit_Y")
         font5 = QFont()
-        font5.setFamily(u"Monospace")
+        font5.setFamilies([u"Monospace"])
         font5.setPointSize(20)
         font5.setBold(True)
-        font5.setWeight(QFont.Weight.Bold)
         self.lineEdit_Y.setFont(font5)
         self.lineEdit_Y.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
@@ -228,10 +236,9 @@ class Ui_MainWindow(object):
         self.label_Y = QLabel(self.tab_2)
         self.label_Y.setObjectName(u"label_Y")
         font6 = QFont()
-        font6.setFamily(u"Courier 10 Pitch")
+        font6.setFamilies([u"Courier 10 Pitch"])
         font6.setPointSize(10)
         font6.setBold(True)
-        font6.setWeight(QFont.Weight.Bold)
         self.label_Y.setFont(font6)
         self.label_Y.setStyleSheet(u"background-color: rgb(0, 85, 127);\n"
 "color: rgb(255, 255, 127);")
@@ -258,7 +265,7 @@ class Ui_MainWindow(object):
         self.push_move.setFont(font4)
         self.push_move.setLayoutDirection(Qt.LeftToRight)
         icon9 = QIcon()
-        icon9.addFile(u":/img/res/move-icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon9.addFile(u":/img/res/move-icon.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.push_move.setIcon(icon9)
         self.push_move.setIconSize(QSize(48, 48))
 
@@ -268,7 +275,7 @@ class Ui_MainWindow(object):
         self.push_rotate.setObjectName(u"push_rotate")
         self.push_rotate.setFont(font4)
         icon10 = QIcon()
-        icon10.addFile(u":/img/res/update.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon10.addFile(u":/img/res/update.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.push_rotate.setIcon(icon10)
         self.push_rotate.setIconSize(QSize(48, 48))
 
@@ -278,7 +285,7 @@ class Ui_MainWindow(object):
         self.push_invertX.setObjectName(u"push_invertX")
         self.push_invertX.setFont(font4)
         icon11 = QIcon()
-        icon11.addFile(u":/img/res/right-and-left.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon11.addFile(u":/img/res/right-and-left.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.push_invertX.setIcon(icon11)
         self.push_invertX.setIconSize(QSize(48, 48))
 
@@ -292,7 +299,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.push_invertY)
 
-        self.verticalSpacer = QSpacerItem(20, 243, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 243, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_6.addItem(self.verticalSpacer)
 
@@ -352,7 +359,7 @@ class Ui_MainWindow(object):
         self.menuFiles_Recenti = QMenu(self.menuFile)
         self.menuFiles_Recenti.setObjectName(u"menuFiles_Recenti")
         icon12 = QIcon()
-        icon12.addFile(u":/img/res/document.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon12.addFile(u":/img/res/document.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.menuFiles_Recenti.setIcon(icon12)
         self.menuInfo = QMenu(self.menubar)
         self.menuInfo.setObjectName(u"menuInfo")
@@ -387,7 +394,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"omronpy.m2", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"omronpy", None))
         self.actionAcquisisci_dxf.setText(QCoreApplication.translate("MainWindow", u"Acquisisci dxf", None))
         self.actionFine_lavoro.setText(QCoreApplication.translate("MainWindow", u"Fine lavoro", None))
         self.actionStartMonitor.setText(QCoreApplication.translate("MainWindow", u"StartMonitor", None))
@@ -414,7 +421,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem7 = self.tableWidget_colors.horizontalHeaderItem(3)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"genera", None));
         self.rbPenna.setText(QCoreApplication.translate("MainWindow", u"penna", None))
-        self.rbLama.setText(QCoreApplication.translate("MainWindow", u"lama", None))
+        self.rbLaser.setText(QCoreApplication.translate("MainWindow", u"laser", None))
         self.rbRullo.setText(QCoreApplication.translate("MainWindow", u"rullo", None))
         self.cbxcolor.setText(QCoreApplication.translate("MainWindow", u"ordina segmenti per colore", None))
         self.btGeneraCsv.setText(QCoreApplication.translate("MainWindow", u"genera csv", None))

@@ -3,15 +3,23 @@
 ################################################################################
 ## Form generated from reading UI file 'settings.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
+    QDoubleSpinBox, QGridLayout, QGroupBox, QHeaderView,
+    QLabel, QLineEdit, QSizePolicy, QSpacerItem,
+    QSpinBox, QTabWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 
 class Ui_DialogSettings(object):
     def setupUi(self, DialogSettings):
@@ -33,10 +41,9 @@ class Ui_DialogSettings(object):
         self.label = QLabel(self.groupBox_4)
         self.label.setObjectName(u"label")
         font = QFont()
-        font.setFamily(u"Courier 10 Pitch")
+        font.setFamilies([u"Courier 10 Pitch"])
         font.setPointSize(14)
         font.setBold(True)
-        font.setWeight(QFont.Weight.Bold)
         self.label.setFont(font)
         self.label.setStyleSheet(u"background-color: rgb(0, 85, 127);\n"
 "color: rgb(255, 255, 127);")
@@ -71,7 +78,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout.addWidget(self.groupBox_4)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
 
@@ -141,7 +148,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout.addWidget(self.groupBox_5)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_4)
 
@@ -188,7 +195,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout.addWidget(self.groupBox_6)
 
-        self.verticalSpacer = QSpacerItem(20, 93, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 93, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -250,7 +257,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout_4.addWidget(self.groupBox)
 
-        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_5)
 
@@ -268,16 +275,16 @@ class Ui_DialogSettings(object):
 
         self.gridLayout_3.addWidget(self.label_7, 0, 0, 1, 1)
 
-        self.doubleSpinBoxCutterX = QDoubleSpinBox(self.groupBox_2)
-        self.doubleSpinBoxCutterX.setObjectName(u"doubleSpinBoxCutterX")
-        self.doubleSpinBoxCutterX.setFont(font)
-        self.doubleSpinBoxCutterX.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.doubleSpinBoxCutterX.setDecimals(2)
-        self.doubleSpinBoxCutterX.setMinimum(-500.000000000000000)
-        self.doubleSpinBoxCutterX.setMaximum(500.000000000000000)
-        self.doubleSpinBoxCutterX.setValue(0.000000000000000)
+        self.doubleSpinBoxLaserX = QDoubleSpinBox(self.groupBox_2)
+        self.doubleSpinBoxLaserX.setObjectName(u"doubleSpinBoxLaserX")
+        self.doubleSpinBoxLaserX.setFont(font)
+        self.doubleSpinBoxLaserX.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.doubleSpinBoxLaserX.setDecimals(2)
+        self.doubleSpinBoxLaserX.setMinimum(-500.000000000000000)
+        self.doubleSpinBoxLaserX.setMaximum(500.000000000000000)
+        self.doubleSpinBoxLaserX.setValue(0.000000000000000)
 
-        self.gridLayout_3.addWidget(self.doubleSpinBoxCutterX, 0, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.doubleSpinBoxLaserX, 0, 1, 1, 1)
 
         self.label_11 = QLabel(self.groupBox_2)
         self.label_11.setObjectName(u"label_11")
@@ -289,16 +296,16 @@ class Ui_DialogSettings(object):
 
         self.gridLayout_3.addWidget(self.label_11, 0, 2, 1, 1)
 
-        self.doubleSpinBoxCutterY = QDoubleSpinBox(self.groupBox_2)
-        self.doubleSpinBoxCutterY.setObjectName(u"doubleSpinBoxCutterY")
-        self.doubleSpinBoxCutterY.setFont(font)
-        self.doubleSpinBoxCutterY.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.doubleSpinBoxCutterY.setDecimals(2)
-        self.doubleSpinBoxCutterY.setMinimum(-500.000000000000000)
-        self.doubleSpinBoxCutterY.setMaximum(500.000000000000000)
-        self.doubleSpinBoxCutterY.setValue(0.000000000000000)
+        self.doubleSpinBoxLaserY = QDoubleSpinBox(self.groupBox_2)
+        self.doubleSpinBoxLaserY.setObjectName(u"doubleSpinBoxLaserY")
+        self.doubleSpinBoxLaserY.setFont(font)
+        self.doubleSpinBoxLaserY.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.doubleSpinBoxLaserY.setDecimals(2)
+        self.doubleSpinBoxLaserY.setMinimum(-500.000000000000000)
+        self.doubleSpinBoxLaserY.setMaximum(500.000000000000000)
+        self.doubleSpinBoxLaserY.setValue(0.000000000000000)
 
-        self.gridLayout_3.addWidget(self.doubleSpinBoxCutterY, 0, 3, 1, 1)
+        self.gridLayout_3.addWidget(self.doubleSpinBoxLaserY, 0, 3, 1, 1)
 
         self.gridLayout_3.setColumnStretch(0, 1)
         self.gridLayout_3.setColumnStretch(1, 2)
@@ -307,7 +314,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout_4.addWidget(self.groupBox_2)
 
-        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_6)
 
@@ -385,15 +392,15 @@ class Ui_DialogSettings(object):
 
         self.gridLayout_4.addWidget(self.label_3, 1, 2, 1, 2)
 
-        self.spinBoxOffsetLama = QSpinBox(self.groupBox_3)
-        self.spinBoxOffsetLama.setObjectName(u"spinBoxOffsetLama")
-        self.spinBoxOffsetLama.setFont(font)
-        self.spinBoxOffsetLama.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.spinBoxOffsetLama.setMinimum(-180)
-        self.spinBoxOffsetLama.setMaximum(180)
-        self.spinBoxOffsetLama.setValue(-123)
+        self.spinBoxOffsetLaser = QSpinBox(self.groupBox_3)
+        self.spinBoxOffsetLaser.setObjectName(u"spinBoxOffsetLaser")
+        self.spinBoxOffsetLaser.setFont(font)
+        self.spinBoxOffsetLaser.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.spinBoxOffsetLaser.setMinimum(-180)
+        self.spinBoxOffsetLaser.setMaximum(180)
+        self.spinBoxOffsetLaser.setValue(-123)
 
-        self.gridLayout_4.addWidget(self.spinBoxOffsetLama, 2, 2, 1, 2)
+        self.gridLayout_4.addWidget(self.spinBoxOffsetLaser, 2, 2, 1, 2)
 
         self.gridLayout_4.setColumnStretch(0, 1)
         self.gridLayout_4.setColumnStretch(1, 2)
@@ -402,7 +409,7 @@ class Ui_DialogSettings(object):
 
         self.verticalLayout_4.addWidget(self.groupBox_3)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_2)
 
@@ -442,13 +449,13 @@ class Ui_DialogSettings(object):
         self.label.setBuddy(self.lineEditUrlPlc)
         self.label_2.setBuddy(self.spinBoxPortaPlc)
         self.label_4.setBuddy(self.doubleSpinBoxScala)
-        self.label_3.setBuddy(self.spinBoxOffsetLama)
+        self.label_3.setBuddy(self.spinBoxOffsetLaser)
 #endif // QT_CONFIG(shortcut)
         QWidget.setTabOrder(self.lineEditUrlPlc, self.doubleSpinBoxPennaX)
         QWidget.setTabOrder(self.doubleSpinBoxPennaX, self.doubleSpinBoxPennaY)
-        QWidget.setTabOrder(self.doubleSpinBoxPennaY, self.doubleSpinBoxCutterX)
-        QWidget.setTabOrder(self.doubleSpinBoxCutterX, self.doubleSpinBoxCutterY)
-        QWidget.setTabOrder(self.doubleSpinBoxCutterY, self.doubleSpinBoxRulloX)
+        QWidget.setTabOrder(self.doubleSpinBoxPennaY, self.doubleSpinBoxLaserX)
+        QWidget.setTabOrder(self.doubleSpinBoxLaserX, self.doubleSpinBoxLaserY)
+        QWidget.setTabOrder(self.doubleSpinBoxLaserY, self.doubleSpinBoxRulloX)
         QWidget.setTabOrder(self.doubleSpinBoxRulloX, self.doubleSpinBoxRulloY)
         QWidget.setTabOrder(self.doubleSpinBoxRulloY, self.buttonBox)
 
@@ -479,7 +486,7 @@ class Ui_DialogSettings(object):
         self.groupBox.setTitle(QCoreApplication.translate("DialogSettings", u"SPOSTAMENTO PENNA (cm)", None))
         self.label_5.setText(QCoreApplication.translate("DialogSettings", u"X =", None))
         self.label_6.setText(QCoreApplication.translate("DialogSettings", u"Y =", None))
-        self.groupBox_2.setTitle(QCoreApplication.translate("DialogSettings", u"SPOSTAMENTO LAMA (cm)", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("DialogSettings", u"SPOSTAMENTO LASER (cm)", None))
         self.label_7.setText(QCoreApplication.translate("DialogSettings", u"X =", None))
         self.label_11.setText(QCoreApplication.translate("DialogSettings", u"Y =", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("DialogSettings", u"SPOSTAMENTO RULLO (cm)", None))

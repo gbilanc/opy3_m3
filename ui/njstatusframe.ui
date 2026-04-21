@@ -98,7 +98,7 @@ background-color: rgb(192, 192, 192);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lb_lama">
+       <widget class="QLabel" name="lb_laser">
         <property name="font">
          <font>
           <family>Ubuntu Condensed</family>
@@ -113,7 +113,7 @@ background-color: rgb(192, 192, 192);</string>
          <enum>QFrame::Plain</enum>
         </property>
         <property name="text">
-         <string>lama</string>
+         <string>laser</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

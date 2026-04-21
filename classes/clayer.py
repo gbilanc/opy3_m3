@@ -73,7 +73,7 @@ class CLayer(QGraphicsItem):
         return (bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2
 
     @property
-    def is_lama(self):
+    def is_laser(self):
         return self.name.startswith("TAGLIO")
 
     @property

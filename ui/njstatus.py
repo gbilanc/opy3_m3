@@ -127,8 +127,8 @@ class NjStatus(QFrame):
         return self.status_flags[StatusBit.ValvPENNA.value] == '1'
 
     @property
-    def valve_lama(self):
-        return self.status_flags[StatusBit.ValvLAMA.value] == '1'
+    def valve_laser(self):
+        return self.status_flags[StatusBit.ValvLASER.value] == '1'
 
     @property
     def tool_change(self):
@@ -179,7 +179,7 @@ class NjStatus(QFrame):
         self.status_flags = int2bit(unpacked[0]) + int2bit(unpacked[1])
         self.ui.lb_rullo.setStyleSheet(LABELGREEN if self.valve_rullo else LABELGRAY)
         self.ui.lb_penna.setStyleSheet(LABELGREEN if self.valve_penna else LABELGRAY)
-        self.ui.lb_lama.setStyleSheet(LABELGREEN if self.valve_lama else LABELGRAY)
+        self.ui.lb_laser.setStyleSheet(LABELGREEN if self.valve_laser else LABELGRAY)
         self.ui.lb_emergenza.setStyleSheet(LABELRED if self.nj_emergenza else LABELGRAY)
         self.ui.lb_homing.setStyleSheet(LABELGREEN if self.homing_eseguito else LABELRED)
         self.ui.lb_ecterror.setStyleSheet(LABELRED if self.error_ect else LABELGRAY)
@@ -277,7 +277,7 @@ class NjStatus(QFrame):
         self.total_steps = sum(1 for _ in open('myfile.csv'))
         self._write_num_lines(self.total_steps)  # invia numero di linee
         self._write_tool_id(self.current_tool)  # invia id utensile
-        # if self.current_tool == Tools.Cutter.value:
+        # if self.current_tool == Tools.Laser.value:
         # self.set_trans_mode_on()  # forza Transition Mode On
         # else:
         # self.set_trans_mode_off()  # forza Transition Mode Off
@@ -330,7 +330,7 @@ class NjStatus(QFrame):
         reply = QMessageBox.question(self, 'Ricerca Homing', MES02,
                                      QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes)
         if reply == QMessageBox.StandardButton.Yes:
-            self._write_offset_lama(settings.offset_lama)
+            self._write_offset_laser(settings.offset_laser)
             self.button_state[ButtonBit.Homing.value] = '1'
             self._write_button_state()
             time.sleep(2)
@@ -387,14 +387,14 @@ class NjStatus(QFrame):
         self.fins_instance.memory_area_write(NjWrite.Override.value, packed)
 
     @Slot(int)
-    def _write_offset_lama(self, value):
+    def _write_offset_laser(self, value):
         packed = pack('>h', value).decode('latin1')
-        self.fins_instance.memory_area_write(NjWrite.OffsetLama.value, packed)
+        self.fins_instance.memory_area_write(NjWrite.OffsetLaser.value, packed)
 
     @Slot(float)
-    def _write_offset_lama_float(self, value):
+    def _write_offset_laser_float(self, value):
         packed = pack('>f', float_to_long_bits(value)).decode('latin1')
-        self.fins_instance.memory_area_write(NjWrite.OffsetLamaFloat.value, packed)
+        self.fins_instance.memory_area_write(NjWrite.OffsetLaserFloat.value, packed)
 
     @Slot(int)
     def _write_num_lines(self, value):

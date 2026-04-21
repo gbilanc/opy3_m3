@@ -108,48 +108,42 @@ def get_rullo_steps(plist):
     return steps
 
 
-def get_cutter_steps(plist):
-    velo_max = 1.0  # velocità massima
-    offset_x = float(settings.pos_lama[0]) / settings.scale_unit
-    offset_y = float(settings.pos_lama[1]) / settings.scale_unit
+def get_laser_steps(plist):
+    velo_max = 1.0
+    offset_x = float(settings.pos_laser[0]) / settings.scale_unit
+    offset_y = float(settings.pos_laser[1]) / settings.scale_unit
     steps = list()
     CSTEP.riga = 0
-    new_degree = plist[0].degree1
-    for current_point in plist:
-        old_degree = new_degree
-        new_degree += current_point.degree_rel
-        current_point.point[0] += offset_x
-        current_point.point[1] += offset_y
+    old_degree = settings.curr_degree
+    for pt in plist:
+        pt.point[0] += offset_x
+        pt.point[1] += offset_y
 
-        if current_point.stato1 == current_point.stato2 == tool_off:  # utensile sollevato
-            steps.append(CSTEP(current_point.point, old_degree, velo_max, tool_off))
-            if current_point.length > 0.1:  # 1 punto x esecuzione rampa
-                steps.append(CSTEP(current_point.point, old_degree, velo_max, tool_off))
+        if pt.stato1 == pt.stato2 == tool_off:
+            steps.append(CSTEP(pt.point, old_degree, velo_max, tool_off))
+            if pt.length > 0.1:
+                steps.append(CSTEP(pt.point, old_degree, velo_max, tool_off))
 
-        if current_point.stato1 == current_point.stato2 == tool_onn:  # utensile abbassato
-            steps.append(CSTEP(current_point.point, old_degree, current_point.passo1, tool_onn))
-            if current_point.length > 0.1:  # 1 punto x esecuzione rampa
-                steps.append(CSTEP(current_point.point, old_degree, current_point.passo1, tool_onn))
-            if abs(current_point.degree_rel) > 10.0:
-                steps.append(CSTEP(current_point.point, old_degree, current_point.passo1, tool_off))  # sollevamento
-                steps.append(CSTEP(current_point.point, new_degree, current_point.passo1, tool_off))  # rotazione
-                steps.append(CSTEP(current_point.point, new_degree, current_point.passo1, tool_onn))  # abbassamento
+        if pt.stato1 == pt.stato2 == tool_onn:
+            steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_onn))
+            if abs(pt.degree_rel) > 10.0:
+                steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_onn))
+                if pt.length > 0.1:
+                    steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_onn))
+            if pt.passo1 != pt.passo2:
+                steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_onn))
 
-        if current_point.stato1 == tool_off and current_point.stato2 == tool_onn:  # abbassamento utensile
-            steps.append(CSTEP(current_point.point, new_degree, velo_max, tool_off))
-            steps.append(CSTEP(current_point.point, new_degree, velo_max, tool_onn))
+        if pt.stato1 == tool_off and pt.stato2 == tool_onn:
+            steps.append(CSTEP(pt.point, old_degree, velo_max, tool_off))
+            steps.append(CSTEP(pt.point, old_degree, velo_max, tool_onn))
 
-        if current_point.stato1 == tool_onn and current_point.stato2 == tool_off:  # sollevamento utensile
-            steps.append(CSTEP(current_point.point, old_degree, current_point.passo1, tool_onn))
-            steps.append(CSTEP(current_point.point, old_degree, current_point.passo1, tool_off))
+        if pt.stato1 == tool_onn and pt.stato2 == tool_off:
+            steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_onn))
+            steps.append(CSTEP(pt.point, old_degree, pt.passo1, tool_off))
 
-    steps.pop(0)  # eliminazione passo zero
-    if steps[-1].off_onn == tool_onn:  # sollevamento utensile se abbassato
-        steps.append(CSTEP(steps[-1].point, steps[-1].degree, steps[-1].passo, tool_off))
-    # fine_x = float(settings.pos_end[0]) / settings.scale_unit
-    # fine_y = float(settings.pos_end[1]) / settings.scale_unit
-    # steps.append(CSTEP([fine_x, fine_y], 0.0, velo_max, tool_off))
-    # steps.append(CSTEP([fine_x, fine_y], 0.0, velo_max, tool_off))
+    steps.pop(0)
+    if steps[-1].off_onn == tool_onn:
+        steps.append(CSTEP(steps[-1].point, old_degree, steps[-1].passo, tool_off))
     return steps
 
 
@@ -169,8 +163,8 @@ def myfile_from_csv(tool_id, start):
 
 
 def myfile_from_plist(tool_id, plist):
-    if tool_id == Tools.Cutter.value:
-        return create_myfile(get_cutter_steps(deepcopy(plist)))
+    if tool_id == Tools.Laser.value:
+        return create_myfile(get_laser_steps(deepcopy(plist)))
     elif tool_id == Tools.Rullo.value:
         for idx, current_point in enumerate(plist[2:-1]):  # analisi sollevamenti non consentiti
             if current_point.stato1 == 0 or current_point.stato2 == 0:

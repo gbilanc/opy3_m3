@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
         self.ui.tabWidget.currentChanged.connect(self.change_cur_tab_widget)
         self.ui.rbRullo.clicked.connect(lambda: self.change_current_tool(Tools.Rullo.value))
         self.ui.rbPenna.clicked.connect(lambda: self.change_current_tool(Tools.Penna.value))
-        self.ui.rbLama.clicked.connect(lambda: self.change_current_tool(Tools.Cutter.value))
+        self.ui.rbLaser.clicked.connect(lambda: self.change_current_tool(Tools.Laser.value))
         self.ui.push_move.clicked.connect(self.translate_layer)
         self.ui.push_rotate.clicked.connect(self.rotate_layer)
         self.ui.push_invertX.clicked.connect(lambda: self.flip_layer(0))
@@ -272,8 +272,8 @@ class MainWindow(QMainWindow):
         self.ui.statusbar.showMessage("layer %s selected!" % lx.name)
         self.ui.cbxcolor.setEnabled(len(self.plotter.selected_layer.colors) > 1)
         self.build_colors_table()
-        if lx.is_lama:
-            self.ui.rbLama.click()
+        if lx.is_laser:
+            self.ui.rbLaser.click()
         elif lx.is_penna:
             self.ui.rbPenna.click()
         else:
@@ -282,7 +282,7 @@ class MainWindow(QMainWindow):
 
     def change_current_tool(self, value):
         self.ui.cbxcolor.setEnabled(value != Tools.Rullo.value)
-        self.ui.cbxcolor.setChecked(value == Tools.Cutter.value)
+        self.ui.cbxcolor.setChecked(value == Tools.Laser.value)
         self.cur_tool_id = value
         self.ui.njstatus.set_current_tool(value)
 
@@ -390,8 +390,8 @@ class MainWindow(QMainWindow):
     def show_current_row(self, value):
         self.ui.njstatus.set_current_row(value)
         offset = settings.pos_penna
-        if self.cur_tool_id == Tools.Cutter.value:
-            offset = settings.self.pos_lama
+        if self.cur_tool_id == Tools.Laser.value:
+            offset = settings.pos_laser
         if self.cur_tool_id == Tools.Rullo.value:
             offset = settings.pos_rullo
         if self.ui.tabWidget.currentIndex() > 1:
@@ -447,8 +447,8 @@ class MainWindow(QMainWindow):
             self.ui.rbPenna.click()
         elif memo_helper.tool_id == Tools.Rullo.value:
             self.ui.rbRullo.click()
-        elif memo_helper.tool_id == Tools.Cutter.value:
-            self.ui.rbLama.click()
+        elif memo_helper.tool_id == Tools.Laser.value:
+            self.ui.rbLaser.click()
 
         if self.plotter.selected_layer:
             self.ui.cbxcolor.setEnabled(len(self.plotter.selected_layer.colors) > 1)

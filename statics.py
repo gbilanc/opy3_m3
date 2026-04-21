@@ -48,7 +48,7 @@ class StatusBit(Enum):
     NJ_Homing = 16
     ValvRULLO = 17
     ValvPENNA = 18
-    ValvLAMA = 19
+    ValvLASER = 19
     RichHomeCambioTool = 20
     NJ_Ready = 21
     NJ_Error = 22
@@ -57,8 +57,8 @@ class StatusBit(Enum):
 class NjWrite(Enum):
     Buttons = (1, 0, 1)
     Override = (2, 2, 1)
-    OffsetLama = (3, 3, 1)
-    OffsetLamaFloat = (3, 3, 4)
+    OffsetLaser = (3, 3, 1)
+    OffsetLaserFloat = (3, 3, 4)
     NumeroPunti = (6, 6, 1)
     VelJog = (7, 7, 1)
     TipoUtensile = (8, 8, 1)
@@ -78,7 +78,7 @@ class NjRead(Enum):
 class Tools(Enum):
     Rullo = 0
     Penna = 1
-    Cutter = 2
+    Laser = 2
 
 
 def rounded(p):

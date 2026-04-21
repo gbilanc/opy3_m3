@@ -3,15 +3,22 @@
 ################################################################################
 ## Form generated from reading UI file 'njstatusframe.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QFrame, QGridLayout,
+    QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+    QSpinBox, QVBoxLayout, QWidget)
+import ui.resources_rc
 
 class Ui_statusframe(object):
     def setupUi(self, statusframe):
@@ -31,7 +38,7 @@ class Ui_statusframe(object):
         self.lb_riga = QLabel(self.frame_tools)
         self.lb_riga.setObjectName(u"lb_riga")
         font = QFont()
-        font.setFamily(u"Ubuntu Condensed")
+        font.setFamilies([u"Ubuntu Condensed"])
         font.setPointSize(18)
         self.lb_riga.setFont(font)
         self.lb_riga.setFrameShape(QFrame.Panel)
@@ -43,7 +50,7 @@ class Ui_statusframe(object):
         self.lb_rullo = QLabel(self.frame_tools)
         self.lb_rullo.setObjectName(u"lb_rullo")
         font1 = QFont()
-        font1.setFamily(u"Ubuntu Condensed")
+        font1.setFamilies([u"Ubuntu Condensed"])
         self.lb_rullo.setFont(font1)
         self.lb_rullo.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "border-radius: 10px;\n"
@@ -64,16 +71,16 @@ class Ui_statusframe(object):
 
         self.horizontalLayout.addWidget(self.lb_penna)
 
-        self.lb_lama = QLabel(self.frame_tools)
-        self.lb_lama.setObjectName(u"lb_lama")
-        self.lb_lama.setFont(font1)
-        self.lb_lama.setStyleSheet(u"color: rgb(255, 255, 255);\n"
+        self.lb_laser = QLabel(self.frame_tools)
+        self.lb_laser.setObjectName(u"lb_laser")
+        self.lb_laser.setFont(font1)
+        self.lb_laser.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "border-radius: 10px;\n"
 "background-color: rgb(192, 192, 192);")
-        self.lb_lama.setFrameShadow(QFrame.Plain)
-        self.lb_lama.setAlignment(Qt.AlignCenter)
+        self.lb_laser.setFrameShadow(QFrame.Plain)
+        self.lb_laser.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout.addWidget(self.lb_lama)
+        self.horizontalLayout.addWidget(self.lb_laser)
 
         self.horizontalLayout.setStretch(0, 2)
         self.horizontalLayout.setStretch(1, 1)
@@ -91,16 +98,15 @@ class Ui_statusframe(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.lb_xrun = QLabel(self.frame_assi)
         self.lb_xrun.setObjectName(u"lb_xrun")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lb_xrun.sizePolicy().hasHeightForWidth())
         self.lb_xrun.setSizePolicy(sizePolicy)
         font2 = QFont()
-        font2.setFamily(u"Ubuntu Condensed")
+        font2.setFamilies([u"Ubuntu Condensed"])
         font2.setPointSize(10)
         font2.setBold(False)
-        font2.setWeight(QFont.Weight.Normal)
         self.lb_xrun.setFont(font2)
         self.lb_xrun.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "border-radius: 10px;\n"
@@ -176,7 +182,6 @@ class Ui_statusframe(object):
         font3 = QFont()
         font3.setPointSize(24)
         font3.setBold(True)
-        font3.setWeight(QFont.Weight.Bold)
         self.label.setFont(font3)
         self.label.setAlignment(Qt.AlignCenter)
 
@@ -184,17 +189,16 @@ class Ui_statusframe(object):
 
         self.lb_xpos = QLabel(self.frame_assi)
         self.lb_xpos.setObjectName(u"lb_xpos")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(3)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.lb_xpos.sizePolicy().hasHeightForWidth())
         self.lb_xpos.setSizePolicy(sizePolicy1)
         font4 = QFont()
-        font4.setFamily(u"Digital")
+        font4.setFamilies([u"Digital"])
         font4.setPointSize(28)
         font4.setBold(False)
         font4.setItalic(False)
-        font4.setWeight(QFont.Weight.Normal)
         self.lb_xpos.setFont(font4)
         self.lb_xpos.setStyleSheet(u"background-color: rgb(0, 85, 0);\n"
 "color: rgb(85, 255, 127);")
@@ -265,16 +269,15 @@ class Ui_statusframe(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.btAUTO = QPushButton(self.frame_bottoni)
         self.btAUTO.setObjectName(u"btAUTO")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.btAUTO.sizePolicy().hasHeightForWidth())
         self.btAUTO.setSizePolicy(sizePolicy2)
         font5 = QFont()
-        font5.setFamily(u"Ubuntu")
+        font5.setFamilies([u"Ubuntu"])
         font5.setPointSize(18)
         font5.setBold(True)
-        font5.setWeight(QFont.Weight.Bold)
         self.btAUTO.setFont(font5)
         self.btAUTO.setCheckable(False)
 
@@ -282,7 +285,7 @@ class Ui_statusframe(object):
 
         self.lbover1 = QLabel(self.frame_bottoni)
         self.lbover1.setObjectName(u"lbover1")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.lbover1.sizePolicy().hasHeightForWidth())
@@ -293,10 +296,9 @@ class Ui_statusframe(object):
         self.SB01 = QSpinBox(self.frame_bottoni)
         self.SB01.setObjectName(u"SB01")
         font6 = QFont()
-        font6.setFamily(u"Ubuntu")
+        font6.setFamilies([u"Ubuntu"])
         font6.setPointSize(18)
         font6.setBold(False)
-        font6.setWeight(QFont.Weight.Normal)
         self.SB01.setFont(font6)
         self.SB01.setFrame(True)
         self.SB01.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -367,10 +369,9 @@ class Ui_statusframe(object):
         self.btRESET.setObjectName(u"btRESET")
         self.btRESET.setMinimumSize(QSize(0, 48))
         font7 = QFont()
-        font7.setFamily(u"Ubuntu Condensed")
+        font7.setFamilies([u"Ubuntu Condensed"])
         font7.setPointSize(14)
         font7.setBold(False)
-        font7.setWeight(QFont.Weight.Normal)
         self.btRESET.setFont(font7)
         self.btRESET.setCheckable(False)
 
@@ -407,10 +408,9 @@ class Ui_statusframe(object):
         self.lb_homing = QLabel(self.frame_spie)
         self.lb_homing.setObjectName(u"lb_homing")
         font8 = QFont()
-        font8.setFamily(u"Monospace")
+        font8.setFamilies([u"Monospace"])
         font8.setPointSize(20)
         font8.setBold(False)
-        font8.setWeight(QFont.Weight.Normal)
         self.lb_homing.setFont(font8)
         self.lb_homing.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "border-radius: 10px;\n"
@@ -492,7 +492,7 @@ class Ui_statusframe(object):
         self.csv_start_point = QSpinBox(statusframe)
         self.csv_start_point.setObjectName(u"csv_start_point")
         font9 = QFont()
-        font9.setFamily(u"Ubuntu")
+        font9.setFamilies([u"Ubuntu"])
         font9.setPointSize(18)
         self.csv_start_point.setFont(font9)
         self.csv_start_point.setWrapping(False)
@@ -531,7 +531,7 @@ class Ui_statusframe(object):
         self.lb_riga.setText(QCoreApplication.translate("statusframe", u"000000", None))
         self.lb_rullo.setText(QCoreApplication.translate("statusframe", u"rullo", None))
         self.lb_penna.setText(QCoreApplication.translate("statusframe", u"penna", None))
-        self.lb_lama.setText(QCoreApplication.translate("statusframe", u"lama", None))
+        self.lb_laser.setText(QCoreApplication.translate("statusframe", u"laser", None))
         self.lb_xrun.setText(QCoreApplication.translate("statusframe", u"RUN", None))
         self.lb_xalarm.setText(QCoreApplication.translate("statusframe", u"ALARM", None))
         self.lb_yrun.setText(QCoreApplication.translate("statusframe", u"RUN", None))
