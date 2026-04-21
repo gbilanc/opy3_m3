@@ -1,0 +1,45 @@
+<RCC>
+  <qresource prefix="img">
+    <file>res/about_(info).png</file>
+    <file>res/add.png</file>
+    <file>res/back001.jpg</file>
+    <file>res/cancel.png</file>
+    <file>res/copy.png</file>
+    <file>res/cut.png</file>
+    <file>res/document.png</file>
+    <file>res/e-mail.png</file>
+    <file>res/exit.png</file>
+    <file>res/exit1.png</file>
+    <file>res/find.png</file>
+    <file>res/flip-horizontal.png</file>
+    <file>res/flip-vertical.png</file>
+    <file>res/help.png</file>
+    <file>res/move-icon.png</file>
+    <file>res/new.png</file>
+    <file>res/no.png</file>
+    <file>res/open.png</file>
+    <file>res/past.png</file>
+    <file>res/pege_setup.png</file>
+    <file>res/preview.png</file>
+    <file>res/print.png</file>
+    <file>res/redo.png</file>
+    <file>res/remove.png</file>
+    <file>res/right-and-left.png</file>
+    <file>res/save_all.png</file>
+    <file>res/save_as.png</file>
+    <file>res/save.png</file>
+    <file>res/search.png</file>
+    <file>res/send_e-mail.png</file>
+    <file>res/settings_2.png</file>
+    <file>res/settings.png</file>
+    <file>res/undo.png</file>
+    <file>res/up-and-down.png</file>
+    <file>res/update.png</file>
+    <file>res/web.png</file>
+    <file>res/yes_2.png</file>
+    <file>res/Yes.bmp</file>
+    <file>res/yes.png</file>
+    <file>res/zoom_in.png</file>
+    <file>res/zoom_out.png</file>
+  </qresource>
+</RCC>

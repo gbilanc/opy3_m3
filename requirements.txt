@@ -1,0 +1,4 @@
+PySide2>=5.15
+ezdxf>=1.0
+setuptools>=67.3
+usb~=0.0.83.dev0

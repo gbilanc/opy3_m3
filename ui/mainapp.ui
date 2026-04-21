@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>giampaolo</author>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>712</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>omronpy</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="GVPlotter" name="plotter"/>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progBar1">
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>360</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Courier 10 Pitch</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_1">
+       <attribute name="title">
+        <string>livelli</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="3">
+         <widget class="QTableWidget" name="tableWidget_layers">
+          <property name="font">
+           <font>
+            <family>Liberation Mono</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>75</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>layer</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>mostra</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>genera</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>inverti</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QTableWidget" name="tableWidget_colors">
+          <property name="font">
+           <font>
+            <family>Liberation Mono</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>75</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>colore</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>passo</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ordine</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>genera</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="rbPenna">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid blue; 
+border-radius: 5px; </string>
+          </property>
+          <property name="text">
+           <string>penna</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QRadioButton" name="rbLama">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid blue; 
+border-radius: 5px; </string>
+          </property>
+          <property name="text">
+           <string>lama</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QRadioButton" name="rbRullo">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid blue; 
+border-radius: 5px; </string>
+          </property>
+          <property name="text">
+           <string>rullo</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QCheckBox" name="cbxcolor">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid green; 
+border-radius: 5px; </string>
+          </property>
+          <property name="text">
+           <string>ordina segmenti per colore</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="QPushButton" name="btGeneraCsv">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>genera csv</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/save.png</normaloff>:/img/res/save.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>modifiche</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QPushButton" name="push_origine">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>LEGGI XY</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/search.png</normaloff>:/img/res/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_Y">
+            <property name="font">
+             <font>
+              <family>Monospace</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="text">
+             <string>0.000</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_X">
+            <property name="font">
+             <font>
+              <family>Monospace</family>
+              <pointsize>20</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="text">
+             <string>0.000</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_Y">
+            <property name="font">
+             <font>
+              <family>Courier 10 Pitch</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 85, 127);
+color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Y&lt;/span&gt; (metri)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>lineEdit_Y</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_X">
+            <property name="font">
+             <font>
+              <family>Courier 10 Pitch</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 85, 127);
+color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;X&lt;/span&gt; (metri)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buddy">
+             <cstring>lineEdit_X</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="push_move">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>TRASLA XY</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/move-icon.png</normaloff>:/img/res/move-icon.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="push_rotate">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>RUOTA 90'</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/update.png</normaloff>:/img/res/update.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="push_invertX">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>ROVESCIA X</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/right-and-left.png</normaloff>:/img/res/right-and-left.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="push_invertY">
+          <property name="font">
+           <font>
+            <family>Courier 10 Pitch</family>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>ROVESCIA Y</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/img/res/up-and-down.png</normaloff>:/img/res/up-and-down.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>243</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>driver</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1">
+        <item>
+         <widget class="NjStatus" name="njstatus"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>assi</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="spacing">
+         <number>12</number>
+        </property>
+        <item>
+         <widget class="Axis" name="axis_x">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Axis" name="axis_y">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Axis" name="axis_z">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuFiles_Recenti">
+     <property name="title">
+      <string>Files Recenti</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/img/res/document.png</normaloff>:/img/res/document.png</iconset>
+     </property>
+     <addaction name="actionAaaa"/>
+     <addaction name="actionFile2"/>
+    </widget>
+    <addaction name="actionAcquisisci_dxf"/>
+    <addaction name="menuFiles_Recenti"/>
+    <addaction name="actionSimula_plotter"/>
+    <addaction name="separator"/>
+    <addaction name="actionFine_lavoro"/>
+   </widget>
+   <widget class="QMenu" name="menuInfo">
+    <property name="title">
+     <string>Opzioni</string>
+    </property>
+    <addaction name="actionImpostazioni"/>
+    <addaction name="actionInformazioni"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuInfo"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAcquisisci_dxf">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/open.png</normaloff>:/img/res/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Acquisisci dxf</string>
+   </property>
+  </action>
+  <action name="actionFine_lavoro">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/exit.png</normaloff>:/img/res/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fine lavoro</string>
+   </property>
+  </action>
+  <action name="actionStartMonitor">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/up-and-down.png</normaloff>:/img/res/up-and-down.png</iconset>
+   </property>
+   <property name="text">
+    <string>StartMonitor</string>
+   </property>
+  </action>
+  <action name="actionStopMonitor">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/no.png</normaloff>:/img/res/no.png</iconset>
+   </property>
+   <property name="text">
+    <string>StopMonitor</string>
+   </property>
+  </action>
+  <action name="actionSimula_plotter">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/preview.png</normaloff>:/img/res/preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Simula plotter</string>
+   </property>
+  </action>
+  <action name="actionInformazioni">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/about_(info).png</normaloff>:/img/res/about_(info).png</iconset>
+   </property>
+   <property name="text">
+    <string>Informazioni</string>
+   </property>
+  </action>
+  <action name="actionImpostazioni">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/img/res/settings.png</normaloff>:/img/res/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Impostazioni</string>
+   </property>
+  </action>
+  <action name="actionAaaa">
+   <property name="text">
+    <string>file1</string>
+   </property>
+  </action>
+  <action name="actionFile2">
+   <property name="text">
+    <string>file2</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GVPlotter</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">gvplotter</header>
+  </customwidget>
+  <customwidget>
+   <class>Axis</class>
+   <extends>QFrame</extends>
+   <header location="global">axis</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NjStatus</class>
+   <extends>QFrame</extends>
+   <header location="global">njstatus</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>plotter</tabstop>
+ </tabstops>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionFine_lavoro</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
