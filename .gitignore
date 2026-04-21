@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Generated/temporary files
+*_origin.dxf
+recent_files.json
+
+# Deprecated config files (merged into config.json)
+csv_config.json
+svc_config.json
