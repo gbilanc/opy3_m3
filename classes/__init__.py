@@ -22,7 +22,22 @@ VELO_MAX_RULLO = 0.5
 
 
 def _get_linear_steps(plist, offset_x, offset_y, velo_max):
-    """Logica comune per utensili lineari (penna e laser)."""
+    """
+    Genera una sequenza di step lineari per utensili a movimento semplice (penna e laser).
+
+    La funzione trasforma i punti di percorso (CPOINT) in comandi per il PLC (CSTEP),
+    gestendo l'abbassamento/sollevamento dell'utensile, i cambi di direzione
+    (tramite DEGREE_THRESHOLD) e le rampe di accelerazione (tramite LENGTH_THRESHOLD).
+
+    Args:
+        plist (list[CPOINT]): Lista di punti di percorso da elaborare.
+        offset_x (float): Offset di coordinata X da applicare a ogni punto.
+        offset_y (float): Offset di coordinata Y da applicare a ogni punto.
+        velo_max (float): Velocità massima di spostamento per l'utensile.
+
+    Returns:
+        list[CSTEP]: Lista di step pronti per la serializzazione in CSV.
+    """
     steps = []
     CSTEP.riga = 0
     old_degree = settings.curr_degree
@@ -62,27 +77,21 @@ def _get_linear_steps(plist, offset_x, offset_y, velo_max):
     if steps and steps[-1].off_onn == TOOL_ONN:
         steps.append(CSTEP(steps[-1].point, old_degree, steps[-1].passo, TOOL_OFF))
 
-    # 1. Aggiungi la copia (senza preoccuparti della riga ora)
-    if steps:
-        steps.insert(0, deepcopy(steps[0]))
-
-    # 2. Ricalcola TUTTE le righe per garantire la progressione 0, 1, 2...
-    for i, step in enumerate(steps):
-        step.riga = i + 1
-
     return steps
 
 
 def _get_penna_steps(plist):
-    """Genera la lista di CSTEP per l'utensile penna.
+    """
+    Genera la lista di CSTEP specifica per l'utensile penna.
 
-    Applica l'offset della posizione penna e delega a _get_linear_steps.
+    Calcola l'offset di posizione della penna basandosi sulle impostazioni globali
+    e delega la generazione della sequenza a _get_linear_steps.
 
     Args:
-        plist: lista di CPOINT che descrivono il percorso.
+        plist (list[CPOINT]): Lista di punti di percorso.
 
     Returns:
-        Lista di CSTEP pronti per la serializzazione.
+        list[CSTEP]: Sequenza di step configurata per la penna.
     """
     offset_x = float(settings.pos_penna[0]) / settings.scale_unit
     offset_y = float(settings.pos_penna[1]) / settings.scale_unit
@@ -90,7 +99,19 @@ def _get_penna_steps(plist):
 
 
 def _get_rullo_steps(plist):
-    """Generazione step per utensile rullo (con rotazione)."""
+    """
+    Genera la lista di CSTEP specifica per l'utensile rullo, gestendo la rotazione.
+
+    A differenza degli utensili lineari, il rullo richiede la gestione dell'angolo
+    di rotazione dell'asse C. La funzione calcola l'incremento del grado basandosi
+    sulla direzione del movimento e inserisce step di hold per i cambi di direzione.
+
+    Args:
+        plist (list[CPOINT]): Lista di punti di percorso.
+
+    Returns:
+        list[CSTEP]: Sequenza di step configurata per il rullo con rotazione asse C.
+    """
     velo_rot = settings.speed_rullo  # velocità rotazione
     offset_x = float(settings.pos_rullo[0]) / settings.scale_unit
     offset_y = float(settings.pos_rullo[1]) / settings.scale_unit
@@ -162,15 +183,17 @@ def _get_rullo_steps(plist):
 
 
 def _get_laser_steps(plist):
-    """Genera la lista di CSTEP per l'utensile laser.
+    """
+    Genera la lista di CSTEP specifica per l'utensile laser.
 
-    Applica l'offset della posizione laser e delega a _get_linear_steps.
+    Calcola l'offset di posizione del laser basandosi sulle impostazioni globali
+    e delega la generazione della sequenza a _get_linear_steps.
 
     Args:
-        plist: lista di CPOINT che descrivono il percorso.
+        plist (list[CPOINT]): Lista di punti di percorso.
 
     Returns:
-        Lista di CSTEP pronti per la serializzazione.
+        list[CSTEP]: Sequenza di step configurata per il laser.
     """
     offset_x = float(settings.pos_laser[0]) / settings.scale_unit
     offset_y = float(settings.pos_laser[1]) / settings.scale_unit
@@ -178,11 +201,19 @@ def _get_laser_steps(plist):
 
 
 def _validate_rullo_plist(plist):
-    """Verifica che il percorso rullo non contenga sollevamenti intermedi.
+    """
+    Verifica l'integrità del percorso per l'utensile rullo.
 
-    Analizza i punti dal terzo al penultimo (il percorso effettivo,
-    escludendo approccio iniziale e uscita finale).
-    Restituisce la tupla di errore se trova un sollevamento, None altrimenti.
+    Il rullo non supporta sollevamenti dell'utensile intermedi durante l'esecuzione
+    del tracciato (solo all'inizio e alla fine). Questa funzione scansiona il
+    percorso per identificare eventuali stati TOOL_OFF non validi.
+
+    Args:
+        plist (list[CPOINT]): Lista di punti di percorso da validare.
+
+    Returns:
+        tuple | None: Ritorna una tupla (indice, messaggio_errore, punto_inizio, punto_fine)
+                      se viene trovato un errore, altrimenti None.
     """
     for idx, pt in enumerate(plist[2:-1], start=2):
         if pt.stato1 == TOOL_OFF or pt.stato2 == TOOL_OFF:
@@ -191,14 +222,18 @@ def _validate_rullo_plist(plist):
 
 
 def _create_myfile(steps):
-    """Serializza la lista di CSTEP nel file myfile.csv.
+    """
+    Serializza la lista di CSTEP nel file fisico 'myfile.csv'.
+
+    Scrive ogni step nel file utilizzando il separatore ';' e verifica che il
+    numero totale di step non superi il limite massimo supportato dal PLC (32700).
 
     Args:
-        steps: lista di CSTEP da scrivere.
+        steps (list[CSTEP]): Lista di step da scrivere su disco.
 
     Returns:
-        Tupla (1, MES07) se il numero di step supera 32700,
-        tupla (0, MES08) altrimenti.
+        tuple: Una tupla (codice_errore, messaggio_risorsa) dove il codice 0
+               indica successo e 1 indica superamento del limite di righe.
     """
     with open("myfile.csv", mode="w", encoding="utf-8") as csvfile:
         sw = csv.writer(csvfile, delimiter=";")
@@ -211,19 +246,19 @@ def _create_myfile(steps):
 
 
 def myfile_from_csv(tool_id, start):
-    """Legge il percorso da punti.csv e genera il file myfile.csv.
+    """
+    Processo completo di generazione file partendo da un file CSV di punti.
 
-    Costruisce la lista di CPOINT a partire dalla riga 'start' del CSV,
-    inserendo un punto origine e un punto di approccio con utensile
-    sollevato, poi delega a myfile_from_plist per la generazione.
+    Legge 'punti.csv', recupera l'angolazione di partenza, crea un punto di approccio
+    con utensile sollevato e genera la sequenza finale di step.
 
     Args:
-        tool_id: identificativo dell'utensile (Tools.value).
-        start: indice di riga nel CSV da cui iniziare il percorso.
+        tool_id (int): Identificativo dell'utensile selezionato (da Tools.value).
+        start (int): Indice di riga nel CSV da cui iniziare l'estrazione del percorso.
 
     Returns:
-        Tupla (codice, messaggio) da create_myfile, oppure
-        tupla (2, MES11, punto, punto) se il rullo ha sollevamenti invalidi.
+        tuple: Risultato della creazione del file (codice, messaggio) o errore
+                di validazione per il rullo.
     """
     plist = [CPOINT([0, 0], 1.0, 0, 0.0)]
     with open("punti.csv", mode="r", encoding="utf-8") as csvfile:
@@ -242,18 +277,19 @@ def myfile_from_csv(tool_id, start):
 
 
 def myfile_from_plist(tool_id, plist):
-    """Genera myfile.csv dalla lista di CPOINT per l'utensile specificato.
+    """
+    Interfaccia di alto livello per generare il file di output da una lista di punti.
 
-    Seleziona la funzione di generazione step appropriata in base a tool_id.
-    Per il rullo, esegue prima la validazione dei sollevamenti intermedi.
+    In base al tool_id, seleziona l'algoritmo di generazione step appropriato
+    (Laser, Penna o Rullo) e, nel caso del rullo, esegue la validazione preventiva.
 
     Args:
-        tool_id: identificativo dell'utensile (Tools.value).
-        plist: lista di CPOINT che descrivono il percorso.
+        tool_id (int): Identificativo dell'utensile (Tools.value).
+        plist (list[CPOINT]): Lista di punti di percorso.
 
     Returns:
-        Tupla (codice, messaggio) da create_myfile, oppure
-        tupla (2, MES11, punto, punto) se il rullo ha sollevamenti invalidi.
+        tuple: Risultato della creazione del file (codice, messaggio) o errore
+                di validazione per il rullo.
     """
     if tool_id == Tools.Laser.value:
         return _create_myfile(_get_laser_steps(deepcopy(plist)))
