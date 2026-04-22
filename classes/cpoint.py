@@ -1,4 +1,4 @@
-"# encoding: utf-8
+# encoding: utf-8
 
 
 class CPOINT(object):
@@ -7,7 +7,7 @@ class CPOINT(object):
 
     Questa classe funge da modello dati per i punti importati dai file CSV/DXF.
     Ogni istanza contiene non solo le coordinate spaziali, ma anche i parametri
-    di stato (velocità, posizione strumento e angolazione) sia per l'arrivo 
+    di stato (velocità, posizione strumento e angolazione) sia per l'arrivo
     al punto che per la ripartenza verso il punto successivo.
 
     Attributes:
@@ -61,11 +61,17 @@ class CPOINT(object):
             list[str]: Rappresentazione testuale dei parametri del punto.
         """
         return [
-            "%.09f" % self.point[0], "%.09f" % self.point[1],
-            "%.02f" % self.passo1, "%.02f" % self.passo2,
-            "%d" % self.stato1, "%d" % self.stato2,
-            "%.02f" % self.degree1, "%.02f" % self.degree2,
-            "%.02f" % self.degree_rel, "%.05f" % self.length]
+            "%.09f" % self.point[0],
+            "%.09f" % self.point[1],
+            "%.02f" % self.passo1,
+            "%.02f" % self.passo2,
+            "%d" % self.stato1,
+            "%d" % self.stato2,
+            "%.02f" % self.degree1,
+            "%.02f" % self.degree2,
+            "%.02f" % self.degree_rel,
+            "%.05f" % self.length,
+        ]
 
     @staticmethod
     def deserialize(data):
@@ -73,14 +79,18 @@ class CPOINT(object):
         Crea un'istanza di CPOINT a partire da una riga di dati (lista di stringhe).
 
         Args:
-            data (list[str]): Riga di dati proveniente da un file CSV. 
+            data (list[str]): Riga di dati proveniente da un file CSV.
                               Si assume che l'ordine dei campi sia quello definito in serialize().
 
         Returns:
             CPOINT: Oggetto punto ricostruito dai dati.
         """
-        point = CPOINT([float(data[0]), float(data[1])],
-                       float(data[2]), int(data[4]), float(data[6]))
+        point = CPOINT(
+            [float(data[0]), float(data[1])],
+            float(data[2]),
+            int(data[4]),
+            float(data[6]),
+        )
         point.passo2 = float(data[3])
         point.stato2 = int(data[5])
         point.degree2 = float(data[7])

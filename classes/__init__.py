@@ -77,6 +77,14 @@ def _get_linear_steps(plist, offset_x, offset_y, velo_max):
     if steps and steps[-1].off_onn == TOOL_ONN:
         steps.append(CSTEP(steps[-1].point, old_degree, steps[-1].passo, TOOL_OFF))
 
+    # 1. Aggiungi la copia (senza preoccuparti della riga ora)
+    if steps:
+        steps.insert(0, deepcopy(steps[0]))
+
+    # 2. Ricalcola TUTTE le righe per garantire la progressione 0, 1, 2...
+    for i, step in enumerate(steps):
+        step.riga = i
+
     return steps
 
 
