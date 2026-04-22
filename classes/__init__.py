@@ -45,27 +45,35 @@ def _get_linear_steps(plist, offset_x, offset_y, velo_max):
                     steps.append(CSTEP(pt.point, old_degree, pt.passo1, TOOL_ONN))
             if abs(pt.passo1 - pt.passo2) > EPSILON:  # cambio velocità
                 steps.append(CSTEP(pt.point, old_degree, pt.passo1, TOOL_ONN))
-
-        elif pt.stato1 == TOOL_OFF and pt.stato2 == TOOL_ONN:  # abbassamento utensile
+        # abbassamento utensile
+        elif pt.stato1 == TOOL_OFF and pt.stato2 == TOOL_ONN:
             steps.append(CSTEP(pt.point, old_degree, velo_max, TOOL_OFF))
             steps.append(CSTEP(pt.point, old_degree, velo_max, TOOL_ONN))
-
-        elif pt.stato1 == TOOL_ONN and pt.stato2 == TOOL_OFF:  # sollevamento utensile
+        # sollevamento utensile
+        elif pt.stato1 == TOOL_ONN and pt.stato2 == TOOL_OFF:
             steps.append(CSTEP(pt.point, old_degree, pt.passo1, TOOL_ONN))
             steps.append(CSTEP(pt.point, old_degree, pt.passo1, TOOL_OFF))
-
         # elimina il primo step (passo zero) appena generato
         if first and steps:
             steps.pop(0)
             first = False
 
-    if steps and steps[-1].off_onn == TOOL_ONN:  # sollevamento utensile se abbassato
+    # sollevamento utensile se abbassato
+    if steps and steps[-1].off_onn == TOOL_ONN:
         steps.append(CSTEP(steps[-1].point, old_degree, steps[-1].passo, TOOL_OFF))
+
+    # 1. Aggiungi la copia (senza preoccuparti della riga ora)
+    if steps:
+        steps.insert(0, deepcopy(steps[0]))
+
+    # 2. Ricalcola TUTTE le righe per garantire la progressione 0, 1, 2...
+    for i, step in enumerate(steps):
+        step.riga = i + 1
 
     return steps
 
 
-def get_penna_steps(plist):
+def _get_penna_steps(plist):
     """Genera la lista di CSTEP per l'utensile penna.
 
     Applica l'offset della posizione penna e delega a _get_linear_steps.
@@ -81,7 +89,7 @@ def get_penna_steps(plist):
     return _get_linear_steps(plist, offset_x, offset_y, VELO_MAX_PENNA)
 
 
-def get_rullo_steps(plist):
+def _get_rullo_steps(plist):
     """Generazione step per utensile rullo (con rotazione)."""
     velo_rot = settings.speed_rullo  # velocità rotazione
     offset_x = float(settings.pos_rullo[0]) / settings.scale_unit
@@ -153,7 +161,7 @@ def get_rullo_steps(plist):
     return steps
 
 
-def get_laser_steps(plist):
+def _get_laser_steps(plist):
     """Genera la lista di CSTEP per l'utensile laser.
 
     Applica l'offset della posizione laser e delega a _get_linear_steps.
@@ -167,6 +175,39 @@ def get_laser_steps(plist):
     offset_x = float(settings.pos_laser[0]) / settings.scale_unit
     offset_y = float(settings.pos_laser[1]) / settings.scale_unit
     return _get_linear_steps(plist, offset_x, offset_y, VELO_MAX_LASER)
+
+
+def _validate_rullo_plist(plist):
+    """Verifica che il percorso rullo non contenga sollevamenti intermedi.
+
+    Analizza i punti dal terzo al penultimo (il percorso effettivo,
+    escludendo approccio iniziale e uscita finale).
+    Restituisce la tupla di errore se trova un sollevamento, None altrimenti.
+    """
+    for idx, pt in enumerate(plist[2:-1], start=2):
+        if pt.stato1 == TOOL_OFF or pt.stato2 == TOOL_OFF:
+            return 2, MES11, pt.point, plist[idx + 1].point
+    return None
+
+
+def _create_myfile(steps):
+    """Serializza la lista di CSTEP nel file myfile.csv.
+
+    Args:
+        steps: lista di CSTEP da scrivere.
+
+    Returns:
+        Tupla (1, MES07) se il numero di step supera 32700,
+        tupla (0, MES08) altrimenti.
+    """
+    with open("myfile.csv", mode="w", encoding="utf-8") as csvfile:
+        sw = csv.writer(csvfile, delimiter=";")
+        for step in steps:
+            sw.writerow(step.serialize())
+    if len(steps) > 32700:
+        return 1, MES07
+    else:
+        return 0, MES08
 
 
 def myfile_from_csv(tool_id, start):
@@ -185,7 +226,7 @@ def myfile_from_csv(tool_id, start):
         tupla (2, MES11, punto, punto) se il rullo ha sollevamenti invalidi.
     """
     plist = [CPOINT([0, 0], 1.0, 0, 0.0)]
-    with open("punti.csv", "r") as csvfile:
+    with open("punti.csv", mode="r", encoding="utf-8") as csvfile:
         reader = list(csv.reader(csvfile, delimiter=";"))
         # angolazione di partenza dalla riga precedente
         settings.perv_degree = float(reader[start - 1][7])
@@ -198,19 +239,6 @@ def myfile_from_csv(tool_id, start):
         for row in reader[start:]:
             plist.append(CPOINT.deserialize(row))
     return myfile_from_plist(tool_id, plist)
-
-
-def _validate_rullo_plist(plist):
-    """Verifica che il percorso rullo non contenga sollevamenti intermedi.
-
-    Analizza i punti dal terzo al penultimo (il percorso effettivo,
-    escludendo approccio iniziale e uscita finale).
-    Restituisce la tupla di errore se trova un sollevamento, None altrimenti.
-    """
-    for idx, pt in enumerate(plist[2:-1], start=2):
-        if pt.stato1 == TOOL_OFF or pt.stato2 == TOOL_OFF:
-            return 2, MES11, pt.point, plist[idx + 1].point
-    return None
 
 
 def myfile_from_plist(tool_id, plist):
@@ -228,31 +256,11 @@ def myfile_from_plist(tool_id, plist):
         tupla (2, MES11, punto, punto) se il rullo ha sollevamenti invalidi.
     """
     if tool_id == Tools.Laser.value:
-        return create_myfile(get_laser_steps(deepcopy(plist)))
-    elif tool_id == Tools.Rullo.value:
-        error = _validate_rullo_plist(plist)
-        if error is not None:
-            return error
-        return create_myfile(get_rullo_steps(deepcopy(plist)))
-    else:
-        return create_myfile(get_penna_steps(deepcopy(plist)))
-
-
-def create_myfile(steps):
-    """Serializza la lista di CSTEP nel file myfile.csv.
-
-    Args:
-        steps: lista di CSTEP da scrivere.
-
-    Returns:
-        Tupla (1, MES07) se il numero di step supera 32700,
-        tupla (0, MES08) altrimenti.
-    """
-    with open("myfile.csv", "w") as csvfile:
-        sw = csv.writer(csvfile, delimiter=";")
-        for step in steps:
-            sw.writerow(step.serialize())
-    if len(steps) > 32700:
-        return 1, MES07
-    else:
-        return 0, MES08
+        return _create_myfile(_get_laser_steps(deepcopy(plist)))
+    if tool_id == Tools.Penna.value:
+        return _create_myfile(_get_penna_steps(deepcopy(plist)))
+    # tool_id == Tools.Rullo.value:
+    error = _validate_rullo_plist(plist)
+    if error is not None:
+        return error
+    return _create_myfile(_get_rullo_steps(deepcopy(plist)))

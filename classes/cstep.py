@@ -13,14 +13,23 @@ class CSTEP(object):
         CSTEP.riga += 1
 
     def __str__(self):
-        return "%06d, point=[%s], degree=%.02f, passo=%.02f,off_onn=%d" % \
-               (self.riga, self.point, self.degree, self.passo, self.off_onn)
+        return "%06d, point=[%s], degree=%.02f, passo=%.02f,off_onn=%d" % (
+            self.riga,
+            self.point,
+            self.degree,
+            self.passo,
+            self.off_onn,
+        )
 
     def serialize(self):
         return [
-            '%06d' % self.riga,
-            '%.06f' % (self.point[0] * 1000),
-            '%.06f' % (self.point[1] * 1000),
-            '%.02f' % self.degree,
-            '%.02f' % self.passo,
-            '%d' % self.off_onn]
+            "%06d" % self.riga,
+            "%.06f" % (self.point[0] * 1000),
+            "%.06f" % (self.point[1] * 1000),
+            "%.02f" % self.degree,
+            "%.02f" % self.passo,
+            "%d" % self.off_onn,
+        ]
+
+    def clone(self):
+        return CSTEP(self.point, self.degree, self.passo, self.off_onn)
