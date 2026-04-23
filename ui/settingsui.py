@@ -392,15 +392,15 @@ class Ui_DialogSettings(object):
 
         self.gridLayout_4.addWidget(self.label_3, 1, 2, 1, 2)
 
-        self.spinBoxOffsetLaser = QSpinBox(self.groupBox_3)
-        self.spinBoxOffsetLaser.setObjectName(u"spinBoxOffsetLaser")
-        self.spinBoxOffsetLaser.setFont(font)
-        self.spinBoxOffsetLaser.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.spinBoxOffsetLaser.setMinimum(-180)
-        self.spinBoxOffsetLaser.setMaximum(180)
-        self.spinBoxOffsetLaser.setValue(-123)
+        self.spinBoxOffsetGradi = QSpinBox(self.groupBox_3)
+        self.spinBoxOffsetGradi.setObjectName(u"spinBoxOffsetGradi")
+        self.spinBoxOffsetGradi.setFont(font)
+        self.spinBoxOffsetGradi.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.spinBoxOffsetGradi.setMinimum(-180)
+        self.spinBoxOffsetGradi.setMaximum(180)
+        self.spinBoxOffsetGradi.setValue(-123)
 
-        self.gridLayout_4.addWidget(self.spinBoxOffsetLaser, 2, 2, 1, 2)
+        self.gridLayout_4.addWidget(self.spinBoxOffsetGradi, 2, 2, 1, 2)
 
         self.gridLayout_4.setColumnStretch(0, 1)
         self.gridLayout_4.setColumnStretch(1, 2)
@@ -449,7 +449,7 @@ class Ui_DialogSettings(object):
         self.label.setBuddy(self.lineEditUrlPlc)
         self.label_2.setBuddy(self.spinBoxPortaPlc)
         self.label_4.setBuddy(self.doubleSpinBoxScala)
-        self.label_3.setBuddy(self.spinBoxOffsetLaser)
+        self.label_3.setBuddy(self.spinBoxOffsetGradi)
 #endif // QT_CONFIG(shortcut)
         QWidget.setTabOrder(self.lineEditUrlPlc, self.doubleSpinBoxPennaX)
         QWidget.setTabOrder(self.doubleSpinBoxPennaX, self.doubleSpinBoxPennaY)

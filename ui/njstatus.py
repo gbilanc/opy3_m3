@@ -330,7 +330,7 @@ class NjStatus(QFrame):
         reply = QMessageBox.question(self, 'Ricerca Homing', MES02,
                                      QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes)
         if reply == QMessageBox.StandardButton.Yes:
-            self._write_offset_laser(settings.offset_laser)
+            self._write_offset_gradi(settings.offset_gradi)
             self.button_state[ButtonBit.Homing.value] = '1'
             self._write_button_state()
             time.sleep(2)
@@ -387,12 +387,12 @@ class NjStatus(QFrame):
         self.fins_instance.memory_area_write(NjWrite.Override.value, packed)
 
     @Slot(int)
-    def _write_offset_laser(self, value):
+    def _write_offset_gradi(self, value):
         packed = pack('>h', value).decode('latin1')
         self.fins_instance.memory_area_write(NjWrite.OffsetLaser.value, packed)
 
     @Slot(float)
-    def _write_offset_laser_float(self, value):
+    def _write_offset_gradi_float(self, value):
         packed = pack('>f', float_to_long_bits(value)).decode('latin1')
         self.fins_instance.memory_area_write(NjWrite.OffsetLaserFloat.value, packed)
 
