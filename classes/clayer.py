@@ -1,4 +1,10 @@
 # encoding: utf-8
+"""
+Modulo per la gestione dei layer di un file DXF.
+Contiene la classe CLayer per l'organizzazione delle entità geometriche,
+la gestione dei colori, le trasformazioni spaziali e la generazione
+di percorsi di plottaggio per il PLC.
+"""
 
 import csv
 
@@ -39,8 +45,20 @@ def next_line(lines, checkline):
 
 
 class CLayer(QGraphicsItem):
+    """
+    Rappresenta un layer grafico composto da diverse polilinee.
+    Gestisce la visibilità, la selezione, l'orientamento e l'elaborazione 
+    geometrica delle linee per la generazione del percorso di lavoro.
+    """
 
     def __init__(self, layer, entities):
+        """
+        Inizializza un layer con nome, entità geometriche e colori.
+        
+        Args:
+            layer: Oggetto layer del file DXF.
+            entities: Lista di entità geometriche da convertire in CPoliline.
+        """
         QGraphicsItem.__init__(self)
         self.name = layer.dxf.name
         self.lines = [CPoliline(entity, layer) for entity in entities]
@@ -55,11 +73,13 @@ class CLayer(QGraphicsItem):
         self.unitized = False
 
     def __str__(self):
+        """Ritorna una stringa riassuntiva del contenuto del layer (elementi, polilinee e punti totali)."""
         total_points = sum([len(line.points) for line in self.lines])
         return """%d elementi, %d poli linee, %d punti totali""" % (self.elem_count, len(self.lines), total_points)
 
     @property
     def bounds(self):
+        """Ritorna i limiti (minX, minY, maxX, maxY) di tutte le linee del layer."""
         points = list()
         points.extend(line.points for line in self.lines)
         return (min([pt[0] for pt in points[0]]),
@@ -84,7 +104,11 @@ class CLayer(QGraphicsItem):
             return False
 
     def draw(self, qt_scene):
-
+        """
+        Disegna il layer sulla scena Qt.
+        Se il layer è selezionato, disegna anche l'indicatore di progresso
+        numerato per ogni segmento.
+        """
         if not self.unitized:
             self.unitize_lines()
 
@@ -104,6 +128,10 @@ class CLayer(QGraphicsItem):
                     counter += 1
 
     def unitize_lines(self):
+        """
+        Organizza le linee del layer in una sequenza logica di plottaggio
+        basata sulle preferenze di colore e sulla modalità di ordinamento.
+        """
         sorted_colors = sorted(memo_helper.pref_colors, key=lambda p: p.ordine)
         selected_colors = [item.colore for item in sorted_colors if item.genera == 1]
         if settings.sort_by_color:
@@ -115,18 +143,22 @@ class CLayer(QGraphicsItem):
                 self.unitized = True
 
     def translate(self, off_x, off_y):
+        """Sposto tutte le linee del layer di un offset X e Y."""
         for item in self.lines:
             item.translate(off_x, off_y)
 
     def scale(self, fact):
+        """Applica un fattore di scala a tutte le linee del layer."""
         for item in self.lines:
             item.scale(fact)
 
     def rotate(self, radians, center):
+        """Ruota tutte le linee del layer attorno a un centro dato."""
         for item in self.lines:
             item.rotate(radians, center)
 
     def flip(self, mode, center):
+        """Specchia tutte le linee del layer rispetto all'asse specificato (mode)."""
         for item in self.lines:
             item.flip(mode, center)
 
@@ -187,6 +219,10 @@ class CLayer(QGraphicsItem):
     """
 
     def join_lines(self):
+        """
+        Unisce segmenti di linea adiacenti dello stesso colore in polilinee
+        continue per ottimizzare il percorso di plottaggio.
+        """
         unique_lines = list()
         for color in self.colors:
             all_lines = [line for line in self.lines if line.color == color]
