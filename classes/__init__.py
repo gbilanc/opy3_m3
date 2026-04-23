@@ -83,7 +83,7 @@ def _get_linear_steps(plist, offset_x, offset_y, velo_max):
 
     # 2. Ricalcola TUTTE le righe per garantire la progressione 0, 1, 2...
     for i, step in enumerate(steps):
-        step.riga = i
+        step.riga = i + 1
 
     return steps
 
