@@ -92,5 +92,6 @@ def next_span(disordered, test_span):
 def unique_points(disordered):
     points = [rounded(line.start) for line in disordered]
     points.extend([rounded(line.end) for line in disordered if not line.is_closed])
-    uni_points = [pt for pt in points if points.count(pt) == 1]
-    return uni_points  # if len(unique_points) == 2 else points
+    from collections import Counter
+    counts = Counter(points)
+    return [pt for pt in points if counts[pt] == 1]

@@ -1,6 +1,6 @@
 # encoding: utf-8
 import math
-import os
+import subprocess
 from enum import Enum
 from struct import pack
 from struct import unpack
@@ -89,9 +89,8 @@ def equals(a, b):
     return rounded(a) == rounded(b)
 
 
-def swap_bytes(s):
-    sw = bytes([c for t in zip(s[1::2], s[::2]) for c in t])
-    return sw
+def swap_bytes(s: bytes) -> bytes:
+    return bytes([c for t in zip(s[1::2], s[::2]) for c in t])
 
 
 def vector_length(pt1, pt2):
@@ -154,5 +153,9 @@ def get_color_pref(color):
     return newone
 
 
-def ping_plotter(ipaddress):
-    return os.system('ping -c 1 ' + ipaddress) == 0
+def ping_plotter(ipaddress: str) -> bool:
+    try:
+        return subprocess.run(['ping', '-c', '1', ipaddress],
+                              capture_output=True, timeout=5).returncode == 0
+    except (subprocess.TimeoutExpired, Exception):
+        return False

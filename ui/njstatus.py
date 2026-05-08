@@ -383,32 +383,32 @@ class NjStatus(QFrame):
 
     @Slot(int)
     def _write_override1(self, value):
-        packed = pack('>H', value).decode('latin1')
+        packed = pack('>H', value)
         self.fins_instance.memory_area_write(NjWrite.Override.value, packed)
 
     @Slot(int)
     def _write_offset_gradi(self, value):
-        packed = pack('>h', value).decode('latin1')
+        packed = pack('>h', value)
         self.fins_instance.memory_area_write(NjWrite.OffsetLaser.value, packed)
 
     @Slot(float)
     def _write_offset_gradi_float(self, value):
-        packed = pack('>f', float_to_long_bits(value)).decode('latin1')
+        packed = pack('>f', float_to_long_bits(value))
         self.fins_instance.memory_area_write(NjWrite.OffsetLaserFloat.value, packed)
 
     @Slot(int)
     def _write_num_lines(self, value):
-        packed = pack('>H', value).decode('latin1')
+        packed = pack('>H', value)
         self.fins_instance.memory_area_write(NjWrite.NumeroPunti.value, packed)
 
     @Slot(int)
     def _write_override2(self, value):
-        packed = pack('>H', value).decode('latin1')
+        packed = pack('>H', value)
         self.fins_instance.memory_area_write(NjWrite.VelJog.value, packed)
 
     @Slot(int)
     def _write_tool_id(self, value):
-        packed = pack('>H', value).decode('latin1')
+        packed = pack('>H', value)
         self.fins_instance.memory_area_write(NjWrite.TipoUtensile.value, packed)
 
     @Slot()
@@ -430,5 +430,5 @@ class NjStatus(QFrame):
 
     def _write_button_state(self):
         reversed_list = list(reversed(self.button_state))
-        packed = pack('>H', int(''.join(reversed_list), 2)).decode('latin1')
+        packed = pack('>H', int(''.join(reversed_list), 2))
         self.fins_instance.memory_area_write(NjWrite.Buttons.value, packed)

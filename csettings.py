@@ -3,15 +3,15 @@ from PySide6.QtCore import QSettings
 
 
 class CSettings:
-    sort_by_color = False
-    curr_pos_x = 0.0
-    curr_pos_y = 0.0
-    curr_degree = 0.0
-    raccordo = list()
-
     def __init__(self):
         self.settings = QSettings('settings.ini', QSettings.IniFormat)
         self.settings.setFallbacksEnabled(False)
+        self.sort_by_color = False
+        self.curr_pos_x = 0.0
+        self.curr_pos_y = 0.0
+        self.curr_degree = 0.0
+        self.raccordo: list = []
+        self.perv_degree = 0.0
         self.plcUrl = self.settings.value("plcUrl", "192.168.0.21")
         self.plcPort = int(self.settings.value("plcPort", 9600))
         self.scale_unit = float(self.settings.value("scale_unit", 100.0))

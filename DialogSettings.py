@@ -87,8 +87,7 @@ class DialogSettings(QDialog):
             self.ui.tableWidget_colorpref.setCellWidget(riga, 2,
                                                         get_spinbox_widget(0, 999, pref.ordine))
             self.ui.tableWidget_colorpref.setCellWidget(riga, 3,
-                                                        self.get_checkbox_widget(True if pref.genera == 1 else
-                                                                                 False))
+                                                        self.get_checkbox_widget(pref.genera == 1))
 
     def save_colors_table(self):
         pref_colors = list()

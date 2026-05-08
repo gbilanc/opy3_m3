@@ -5,10 +5,12 @@ from base64 import b64encode
 from json import JSONEncoder
 from json import dumps
 from json import loads
-from os import getcwd
 from os import path
+from pathlib import Path
 
 from ccolorpref import CColorPref
+
+APP_DIR = Path(__file__).resolve().parent
 
 
 class MemoEncoder(JSONEncoder):
@@ -49,7 +51,8 @@ class MemoHelper:
 
     def set_filename(self, filename):
         self.pref_colors = CColorPref.deserialize()
-        self.filename = "%s/pickle/%s" % (getcwd(), b64encode(filename.encode("utf-8")))
+        encoded = b64encode(filename.encode("utf-8")).decode("ascii")
+        self.filename = str(APP_DIR / "pickle" / encoded)
         self.exists = path.isfile(self.filename)
         if self.exists:
             self.deserialize()

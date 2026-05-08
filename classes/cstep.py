@@ -1,27 +1,16 @@
-class CSTEP(object):
-    """
-    Rappresenta un singolo comando di movimento (step) per il PLC.
-
-    A differenza di CPOINT, CSTEP è l'unità atomica che viene scritta nel file
-    di output. Ogni istanza rappresenta un'azione specifica: spostamento a una
-    coordinata, rotazione dell'asse C o cambio di stato dell'utensile.
-
-    Attributes:
-        riga (int): Numero di sequenza dello step (gestito globalmente dalla classe).
-        point (list[float]): Coordinate [X, Y] di destinazione.
-        degree (float): Angolazione assoluta rispetto all'asse X.
-        passo (float): Velocità di interpolazione o di rotazione.
-        off_onn (int): Stato finale dell'utensile (0 = sollevato, 1 = abbassato).
-    """
-
+class CSTEP:
     riga = 0
+    point: list
+    degree: float
+    passo: float
+    off_onn: int
 
-    def __init__(self, *args):
-        self.riga = CSTEP.riga  # numero di riga
-        self.point = args[0]  # coordinate X,Y
-        self.degree = args[1]  # angolazione assoluta su asse X
-        self.passo = args[2]  # velocità interpolazione/rotazione
-        self.off_onn = args[3]  # stato utensile (off=0, onn=1)
+    def __init__(self, point: list, degree: float, passo: float, off_onn: int):
+        self.riga = CSTEP.riga
+        self.point = point
+        self.degree = degree
+        self.passo = passo
+        self.off_onn = off_onn
         CSTEP.riga += 1
 
     def __str__(self):

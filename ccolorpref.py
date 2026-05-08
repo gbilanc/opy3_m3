@@ -4,10 +4,11 @@ from base64 import b64encode
 from json import JSONEncoder
 from json import dumps
 from json import loads
-from os import getcwd
 from os import path
+from pathlib import Path
 
-FILENAME = "%s/pickle/ColorPref.json" % getcwd()
+APP_DIR = Path(__file__).resolve().parent
+FILENAME = str(APP_DIR / "pickle" / "ColorPref.json")
 
 
 class ColorPrefEncoder(JSONEncoder):

@@ -1,34 +1,24 @@
 # encoding: utf-8
 
 
-class CPOINT(object):
-    """
-    Rappresenta un punto di percorso in un file di definizione plotter.
+class CPOINT:
+    point: list
+    passo1: float
+    stato1: int
+    degree1: float
+    passo2: float
+    stato2: int
+    degree2: float
+    length: float
 
-    Questa classe funge da modello dati per i punti importati dai file CSV/DXF.
-    Ogni istanza contiene non solo le coordinate spaziali, ma anche i parametri
-    di stato (velocità, posizione strumento e angolazione) sia per l'arrivo
-    al punto che per la ripartenza verso il punto successivo.
-
-    Attributes:
-        point (list[float]): Coordinate [X, Y] del punto.
-        passo1 (float): Velocità di interpolazione all'arrivo al punto.
-        stato1 (int): Stato dell'utensile all'arrivo (es. 0=OFF, 1=ONN).
-        degree1 (float): Angolazione dello strumento all'arrivo.
-        passo2 (float): Velocità di interpolazione alla ripartenza dal punto.
-        stato2 (int): Stato dell'utensile alla ripartenza.
-        degree2 (float): Angolazione dello strumento alla ripartenza.
-        length (float): Lunghezza del segmento che porta a questo punto.
-    """
-
-    def __init__(self, *args):
-        self.point = args[0]  # coordinate X, Y del punto
-        self.passo1 = args[1]  # velocità interpolazione all'arrivo
-        self.stato1 = args[2]  # position strumento all'arrivo
-        self.degree1 = args[3]  # angolazione strumento all'arrivo
-        self.passo2 = args[1]  # velocità interpolazione alla ripartenza
-        self.stato2 = args[2]  # position strumento alla ripartenza
-        self.degree2 = args[3]  # angolazione strumento alla ripartenza
+    def __init__(self, point: list, passo: float, stato: int, degree: float):
+        self.point = point
+        self.passo1 = passo
+        self.stato1 = stato
+        self.degree1 = degree
+        self.passo2 = passo
+        self.stato2 = stato
+        self.degree2 = degree
         self.length = 0.0
 
     def __repr__(self):

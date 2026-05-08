@@ -113,9 +113,8 @@ class CLayer(QGraphicsItem):
             self.unitize_lines()
 
         font = QFont("Lucida", 1, QFont.Weight.Light)
-        # font.setPointSizeF(1.0)
         font.setStretch(QFont.Stretch.UltraCondensed)
-        del settings.raccordo[:]
+        raccordo: list = []
         if self.visible and len(self.visible_lines) > 0:
             counter = 0
             total_points = 1
@@ -123,9 +122,11 @@ class CLayer(QGraphicsItem):
                 item.draw(qt_scene)
                 if self.selected:
                     item.draw_progressivo(qt_scene, counter, font)
-                    settings.raccordo.append(total_points)
+                    raccordo.append(total_points)
                     total_points += item.points_count
                     counter += 1
+        if self.selected:
+            settings.raccordo = raccordo
 
     def unitize_lines(self):
         """

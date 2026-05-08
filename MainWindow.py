@@ -24,6 +24,7 @@ from classes import myfile_from_csv
 from classes import myfile_from_plist
 from classes.cworkspace import CWorkspace
 from fins.udp import UDPFinsConnection
+from fins import FinsConnection
 from resources import *
 from statics import NjRead, ping_plotter
 from statics import Tools
@@ -33,12 +34,19 @@ from statics import memo_helper
 from statics import settings
 from ui.mainapp import Ui_MainWindow
 
-fins_instance = UDPFinsConnection()
-fins_instance.connect(settings.plcUrl, settings.plcPort)
-fins_instance.icf = '\x80'  # command+response_required
-fins_instance.da1 = '\x15'  # NJ 192.168.0.21  = hex(21)
-fins_instance.sa1 = '\x6E'  # PC 192.168.0.110 = hex(110)
-fins_instance.mac = '\xB2'  # Memory Area Code (HOLDING_WORD)
+fins_instance: UDPFinsConnection | None = None
+
+
+def get_fins_instance() -> UDPFinsConnection:
+    global fins_instance
+    if fins_instance is None:
+        fins_instance = UDPFinsConnection()
+        fins_instance.icf = b'\x80'
+        fins_instance.da1 = b'\x15'
+        fins_instance.sa1 = b'\x6E'
+        fins_instance.mac = b'\xB2'
+        fins_instance.connect(settings.plcUrl, settings.plcPort)
+    return fins_instance
 
 
 def get_label_widget(texto, value, tooltip=None, bg=None):
@@ -66,7 +74,7 @@ class MainWindow(QMainWindow):
         self.recent_files = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.njstatus.fins_instance = fins_instance
+        self.ui.njstatus.fins_instance = get_fins_instance()
         self.ui.axis_x.set_title("driver X")
         self.ui.axis_y.set_title("driver Y")
         self.ui.axis_z.set_title("driver C")
@@ -242,11 +250,11 @@ class MainWindow(QMainWindow):
         for riga, item in enumerate(self.plotter.workspace.layers):
             self.ui.tableWidget_layers.setCellWidget(riga, 0, get_label_widget(item.name, None, str(item)))
             self.ui.tableWidget_layers.setCellWidget(riga, 1, self.get_checkbox_widget(
-                True if item.visible else False, riga, "visible"))
+                item.visible, riga, "visible"))
             self.ui.tableWidget_layers.setCellWidget(riga, 2, self.get_checkbox_widget(
-                True if item.selected else False, riga, "selected"))
+                item.selected, riga, "selected"))
             self.ui.tableWidget_layers.setCellWidget(riga, 3, self.get_checkbox_widget(
-                True if item.reverse else False, riga, "reverse"))
+                item.reverse, riga, "reverse"))
 
     def build_colors_table(self):
         if self.plotter.selected_layer is None:
@@ -262,7 +270,7 @@ class MainWindow(QMainWindow):
                 self.ui.tableWidget_colors.setCellWidget(riga, 2,
                                                          self.get_spinbox_widget(0, 999, color_pref.ordine, "ordine"))
                 self.ui.tableWidget_colors.setCellWidget(riga, 3, self.get_checkbox_widget(
-                    True if color_pref.genera == 1 else False, 0, "genera"))
+                    color_pref.genera == 1, 0, "genera"))
 
     def select_layer_with_index(self, index):
         lx = self.plotter.workspace.layers[index]
@@ -352,13 +360,14 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def _read_status(self):
-        self._handle_response(fins_instance.memory_area_read(NjRead.Override.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.VelJog.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.Nj_Status.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.RunningPoint_ML.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.Axis0_Status.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.Axis1_Status.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.Axis2_Status.value))
+        fi = get_fins_instance()
+        self._handle_response(fi.memory_area_read(NjRead.Override.value))
+        self._handle_response(fi.memory_area_read(NjRead.VelJog.value))
+        self._handle_response(fi.memory_area_read(NjRead.Nj_Status.value))
+        self._handle_response(fi.memory_area_read(NjRead.RunningPoint_ML.value))
+        self._handle_response(fi.memory_area_read(NjRead.Axis0_Status.value))
+        self._handle_response(fi.memory_area_read(NjRead.Axis1_Status.value))
+        self._handle_response(fi.memory_area_read(NjRead.Axis2_Status.value))
         self.ui.njstatus.show_axis_status(self.axis_list)
         settings.curr_pos_x = self.axis_list[0].position[0]
         settings.curr_pos_y = self.axis_list[1].position[0]
@@ -461,8 +470,9 @@ class MainWindow(QMainWindow):
         self.worker2 = QTimer(self)
         self.worker2.setInterval(250)
         self.worker2.timeout.connect(self._read_status)
-        self._handle_response(fins_instance.memory_area_read(NjRead.Override.value))
-        self._handle_response(fins_instance.memory_area_read(NjRead.VelJog.value))
+        fi = get_fins_instance()
+        self._handle_response(fi.memory_area_read(NjRead.Override.value))
+        self._handle_response(fi.memory_area_read(NjRead.VelJog.value))
         self.ui.njstatus.set_callback(self.handle_njstatus_events)
         self.ui.njstatus.bt_manual_clicked()
         self.worker2.start()

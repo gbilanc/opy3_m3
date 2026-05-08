@@ -28,7 +28,7 @@ def oriented_polyline(points):
     return points[index:] + points[:index + 1]
 
 
-class CPoliline(object):
+class CPoliline:
 
     def __init__(self, entity, layer):
         self.color = layer.color if entity.dxf.color == ACI.BYLAYER else entity.dxf.color
@@ -56,8 +56,14 @@ class CPoliline(object):
         return len(self.remove_duplicates()) - 1
 
     def remove_duplicates(self):
-        result = list()
-        return [result.append(p) for p in self.points if p not in result]
+        result: list = []
+        seen = set()
+        for p in self.points:
+            key = tuple(p) if isinstance(p, (list, tuple)) else p
+            if key not in seen:
+                seen.add(key)
+                result.append(p)
+        return result
 
     def draw(self, qt_scene):
         pts = [QPointF(pt[0] * settings.scale_unit,
